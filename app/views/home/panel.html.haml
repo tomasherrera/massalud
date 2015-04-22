@@ -1,0 +1,80 @@
+.container
+  .row.profile
+    .col-md-3
+      .profile-sidebar
+        / SIDEBAR USERPIC
+        .profile-userpic
+          %img.img-responsive{:alt => "", :src => "https://s3-sa-east-1.amazonaws.com/massalud/AlejandroCharQQ.jpg"}/
+        / END SIDEBAR USERPIC
+        / SIDEBAR USER TITLE
+        .profile-usertitle
+          .profile-usertitle-name
+            = "#{@profile.first_name} #{@profile.last_name}"
+          .profile-usertitle-company-name
+            = @profile.company_name
+          .profile-usertitle-email
+            = @profile.email
+        / END SIDEBAR USER TITLE
+        / SIDEBAR BUTTONS
+        .profile-userbuttons
+          //%button.btn.btn-success.btn-sm{:type => "button"} Follow
+          //%button.btn.btn-danger.btn-sm{:type => "button"} Message
+        / END SIDEBAR BUTTONS
+        / SIDEBAR MENU
+        .profile-usermenu
+          %ul.nav
+            %li{"ng-class" => "{active: isSelectedTab(1)}"}
+              %a{:href => "", "ng-click" => "selectTab(1)"}
+                %i.glyphicon.glyphicon-home
+                Sumario
+            %li{"ng-class" => "{active: isSelectedTab(2)}"}
+              %a{:href => "", "ng-click" => "selectTab(2)"}
+                %i.glyphicon.glyphicon-list-alt
+                Pedidos
+            %li{"ng-class" => "{active: isSelectedTab(3)}"}
+              %a{:href => "", "ng-click" => "selectTab(3)"}
+                %i.glyphicon.glyphicon-user
+                Configuración de Cuenta
+            %li{"ng-class" => "{active: isSelectedTab(4)}"}
+              %a{:href => "", "ng-click" => "selectTab(4)"}
+                %i.glyphicon.glyphicon-flag
+                Ayuda
+        / END MENU
+    .col-md-6
+      .profile-content{"ng-show" => "isSelectedTab(1)"}
+        Sumario
+      .profile-content{"ng-show" => "isSelectedTab(2)"}
+        .input-group.custom-search-form
+          %input.form-control{:type => "text", :placeholder => "Buscar", "ng-model" => "query", "ng-focus" => "searching = true", "ng-blur" => "searching = false"}
+          %span.input-group-btn
+            %button.btn.btn-default{:type => "button"}
+              %span.glyphicon.glyphicon-search
+        .products-table
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th Serial
+                %th Nombre
+                /%th Marcas y Presentaciones
+            %tbody
+              %tr{"ng-repeat" => "product in products | filter:query", "ng-class" => "{info: isProductSelected(product)}", "ng-click" => "selectProduct(product)"}
+                %td
+                  {{product.serial}}
+                %td
+                  {{product.title}}
+                /%td
+                /  Mk - {{product.presentations['mk'][0]}} | Actifarma - {{product.presentations['actifarma'][0]}}
+      .profile-content{"ng-show" => "isSelectedTab(3)"}
+        Cofiguración de Cuenta
+      .profile-content{"ng-show" => "isSelectedTab(4)"}
+        Ayuda
+    .col-md-3{"ng-show" => "isSelectedTab(2)"}
+      .product-details
+        .profile-usertitle-name
+          Detalles
+        %p
+          Seleccione un producto para ver detalles.
+
+
+%br/
+%br/

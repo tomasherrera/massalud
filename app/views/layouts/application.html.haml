@@ -1,0 +1,36 @@
+!!!
+%html{"ng-app" => "massalud"}
+  %head
+    %title Mas Salud IPS
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body{"ng-controller" => "HomeController as home"}
+    %nav.navbar.navbar-inverse
+      .container
+        .container-fluid
+          .navbar-header
+            %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+              %span.sr-only Toggle navigation
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            = link_to "", :class => "navbar-brand", 'ng-click' => 'changeView("/"); activeWindow();' do
+              Mas Salud IPS
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            %ul.nav.navbar-nav
+              %li{"ng-class" => "dashboard_style"}
+                = link_to "", 'ng-click' => 'changeView("/"); activeWindow();' do
+                  Inicio
+                  %span.sr-only (current)
+              - if user_signed_in?
+                %li{"ng-class" => "profile_style"}
+                  = link_to current_user.first_name, '', 'ng-click' => 'changeView("/panel"); activeWindow();'
+            %ul.nav.navbar-nav.navbar-right
+              %li
+                - if user_signed_in?
+                  = link_to("Cerrar Sesión", destroy_user_session_path, :method => :delete)
+                - else
+                  = link_to 'Eres Un Proveedor?', new_user_session_path
+    .container
+      = yield
