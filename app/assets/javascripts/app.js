@@ -1,5 +1,5 @@
 (function() {
-  var app = angular.module('massalud', ["ngResource", 'ngRoute', 'ng-rails-csrf', 'templates']);
+  var app = angular.module('massalud', ["ngResource", 'ngRoute']);
 
   app.config(function($routeProvider) {
     $routeProvider
