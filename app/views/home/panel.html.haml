@@ -49,6 +49,8 @@
           %span.input-group-btn
             %button.btn.btn-default{:type => "button"}
               %span.glyphicon.glyphicon-search
+        %button.btn.btn-primary.btn-xs.btn-block{"ng-click" => "ordering = true"}
+          Crear Pedido
         .products-table
           %table.table.table-condensed.table-hover
             %thead
@@ -72,8 +74,64 @@
       .product-details
         .profile-usertitle-name
           Detalles
-        %p
+        %p{"ng-show" => "isProductSelected(null)"}
           Seleccione un producto para ver detalles.
+        %p{"ng-hide" => "isProductSelected(null)"}
+          %h5{"ng-hide" => "isProductSelected(null)"}
+            {{selected_product.title}}
+          %h6{"ng-hide" => "isProductSelected(null)"}
+            Presentaciones
+          .div{"ng-repeat" => "(brand, presentations) in selected_product.presentations"}
+            {{brand}}
+            %br
+            %button.btn.btn-success.btn-xs{"ng-repeat" => "presentation in presentations","ng-click" => "selectedBrandAndPresentation(brand, presentation);"}
+              {{presentation}}
+          %hr
+          %div{"ng-show" => "presentation_selected"}
+            %p
+              {{selected_brand | uppercase}}: {{selected_presentation}} | ${{(selected_product.title.length * 1000)}}
+            Cantidad
+
+            %input.form-control.text-center.input-sm{:type => "number", "min" => "0", "ng-model" => "amount"}
+            %hr
+            %button.btn.btn-primary.btn-xs.btn-block{"ng-click" => "ordeable = false; ordering = true; addProductToOrder(selected_product, amount, selected_brand, selected_presentation);"}
+              Agregar al pedido
+
+
+  .row.profile
+    .col-md-12
+      .order-new{"ng-show" => "ordering"}
+        %h3
+          Nuevo Pedido
+        %hr
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th Serial
+                %th Nombre
+                %th Marca
+                %th Presentación
+                %th Cantidad
+                %th Precio
+            %tbody
+              %tr{"ng-repeat" => "order_item in order_items", "ng-show" => "order_item.serial.length > 0"}
+                %td
+                  {{order_item.serial}}
+                %td
+                  {{order_item.title}}
+                %td
+                  {{order_item.brand}}
+                %td
+                  {{order_item.presentation}}
+                %td
+                  {{order_item.amount}}
+                %td
+                  {{order_item.price}}
+          %h3
+            Total: ${{total}}
+          %button.btn.btn-primary.btn-xs.btn-block{"ng-disabled" => "ordeable"}
+            Crear Pedido
+
 
 
 %br/
